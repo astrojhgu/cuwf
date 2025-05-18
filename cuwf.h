@@ -15,7 +15,7 @@ extern "C"
 
     struct Resource* init_resource(int nch, int n_pt_per_payload, int nbatch, int nint);
     void destroy_resource(struct Resource *res);
-    bool waterfall(struct Resource *res, int16_t *time_domain_input, size_t npt, float *output_spectrum);
+    bool waterfall(struct Resource *res, const int16_t *time_domain_input, size_t npt, float *output_spectrum);
 
 #ifdef __cplusplus
 }

@@ -117,7 +117,7 @@ void destroy_resource(Resource* res) {
     delete res;
 }
 
-bool waterfall(Resource* res, int16_t* time_domain_input, size_t npt, float* output_spectrum) {
+bool waterfall(Resource* res, const int16_t* time_domain_input, size_t npt, float* output_spectrum) {
     if (res->filled + npt <= res->total_length) {
         memcpy(res->host_buffer + res->filled, time_domain_input, sizeof(int16_t) * npt);
         res->filled += npt;
