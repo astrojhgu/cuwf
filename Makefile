@@ -14,7 +14,7 @@ test_cuwf: test_cuwf.o waterfall.o
 	nvcc $^ -o $@ $(CFLAGS) --cudart=static --cudadevrt=none $(LIBS)
 
 libcuwf.so: waterfall.o
-	g++ --shared -fPIC -o $@ $^ $(LIBS)
+	g++ --shared -fPIC -o $@ $^ #$(LIBS)
 
 libcuwf.a: waterfall.o
 	ar crv $@ $^
