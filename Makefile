@@ -1,22 +1,22 @@
-all: test_cufft libcufft_wrapper.a libcufft_wrapper.so
+all: test_cuwf libcuwf.a libcuwf.so
 
 OPT=-O3
 CFLAGS = -g $(OPT)
 LIBS=-lcudart -lcuda -lcufft
 
-test_cufft.o: test_cufft.cpp
+test_cuwf.o: test_cuwf.cpp cuwf.h
 	g++ -c $< -o $@ $(CFLAGS)
 
-cufft_wrapper.o: cufft_wrapper.cu
-	nvcc -c $< -o $@ $(CFLAGS) --cudart=static --cudadevrt=none
+waterfall.o: waterfall.cu cuwf.h
+	nvcc --compiler-options -fPIC -c $< -o $@ $(CFLAGS) --cudart=static --cudadevrt=none
 
-test_cufft: test_cufft.o cufft_wrapper.o
+test_cuwf: test_cuwf.o waterfall.o
 	nvcc $^ -o $@ $(CFLAGS) --cudart=static --cudadevrt=none $(LIBS)
 
-libcufft_wrapper.so: cufft_wrapper.o
+libcuwf.so: waterfall.o
 	g++ --shared -fPIC -o $@ $^ $(LIBS)
 
-libcufft_wrapper.a: cufft_wrapper.o
+libcuwf.a: waterfall.o
 	ar crv $@ $^
 	ranlib $@
 
